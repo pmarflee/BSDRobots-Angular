@@ -12,6 +12,9 @@ Entity.prototype = {
     },
     move: function (vector) {
         this.setPosition(this.x + vector.x, this.y + vector.y);
+    },
+    hasSamePositionAs: function (other) {
+        return this.x === other.x && this.y === other.y;
     }
 };
 
@@ -141,13 +144,14 @@ angular
                 return this.cellSize;
             };
 
-            this.hasRobotAt = function (x, y) {
+            this.robotAt = function (x, y) {
                 for (var i = 0; i < this.robots.length; i++) {
-                    if (this.robots[i].x == x && this.robots[i].y == y) {
-                        return true;
+                    var robot = this.robots[i];
+                    if (robot.x == x && robot.y == y) {
+                        return robot;
                     }
                 }
-                return false;
+                return null;
             };
 
             this.isValidCellSelection = function (cell) {
@@ -163,9 +167,10 @@ angular
 
             this.moveRobots = function () {
                 for (var i = 0; i < this.robots.length; i++) {
-                    var robot = this.robots[i],
-                        vector = robot.getMovementVector(this.player);
-                    robot.move(vector);
+                    var robot = this.robots[i];
+                    if (robot.isAlive) {
+                        robot.move(robot.getMovementVector(this.player));
+                    }
                 }
             }
 

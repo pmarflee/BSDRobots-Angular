@@ -33,3 +33,9 @@ rect.cellOdd {
 rect.hover:hover {
   fill: #ff6a00;
 }
+
+g > line {
+    stroke: red;
+    stroke-width: 3;
+    stroke-linecap: round;
+}
