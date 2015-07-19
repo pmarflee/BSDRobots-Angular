@@ -2,8 +2,7 @@
     <div class="grid-container">
         <svg ng:attr:viewBox="-10 10 {{ (ngModel.gameSize.x + 1) * ngModel.cellSize }} {{ (ngModel.gameSize.y + 1) * ngModel.cellSize }}">
             <g ng-repeat="cell in ngModel.grid track by $index" 
-               ng-click="cellClicked();"
-               ng-class="{hover: isValidCellSelection()}">
+               ng-click="cellClicked();">
                 <rect ng-class-even="'cellEven'" ng-class-odd="'cellOdd'"
                       ng:attr:width="{{ ngModel.cellSize }}"
                       ng:attr:height="{{ ngModel.cellSize }}"
