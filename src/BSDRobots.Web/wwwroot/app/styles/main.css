@@ -39,3 +39,11 @@ g > line {
     stroke-width: 3;
     stroke-linecap: round;
 }
+
+text.gameOver {
+    font-family: "Verdana";
+    font-size: 55;
+    fill: red;
+    stroke: #000000;
+    text-anchor: middle;
+}

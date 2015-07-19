@@ -1,41 +1,46 @@
 ﻿<div id="game">
     <div class="grid-container">
-        <svg ng:attr:viewBox="-10 10 {{ (ngModel.gameSize.x + 1) * ngModel.cellSize }} {{ (ngModel.gameSize.y + 1) * ngModel.cellSize }}">
-            <g ng-repeat="cell in ngModel.grid track by $index" 
-               ng-click="cellClicked();">
-                <rect ng-class-even="'cellEven'" ng-class-odd="'cellOdd'"
-                      ng:attr:width="{{ ngModel.cellSize }}"
-                      ng:attr:height="{{ ngModel.cellSize }}"
-                      ng:attr:x="{{ cell.x * ngModel.cellSize }}"
-                      ng:attr:y="{{ cell.y * ngModel.cellSize }}"
-                      ng-class="{hover: isValidCellSelection()}" />
-                <image 
-                    ng-if="ngModel.player.hasSamePositionAs(cell)"
-                    ng:attr:width="{{ ngModel.cellSize }}"
-                    ng:attr:height="{{ ngModel.cellSize }}"
-                    ng:attr:x="{{ cell.x * ngModel.cellSize }}"
-                    ng:attr:y="{{ cell.y * ngModel.cellSize }}"
-                    xlink:href="https://openclipart.org/download/219585/1432836387.svg" />
-                <g ng-if="ngModel.robotAt(cell.x, cell.y)">
+        <svg ng:attr:viewBox="-10 10 {{ ngModel.gameWidth }} {{ ngModel.gameHeight }}">
+            <g>
+                <g ng-repeat="cell in ngModel.grid track by $index" 
+                   ng-click="!ngModel.player.isAlive || cellClicked();">
+                    <rect ng-class-even="'cellEven'" ng-class-odd="'cellOdd'"
+                          ng:attr:width="{{ ngModel.cellSize }}"
+                          ng:attr:height="{{ ngModel.cellSize }}"
+                          ng:attr:x="{{ cell.x * ngModel.cellSize }}"
+                          ng:attr:y="{{ cell.y * ngModel.cellSize }}"
+                          ng-class="{hover: ngModel.player.isAlive && isValidCellSelection()}" />
                     <image 
+                        ng-if="ngModel.player.hasSamePositionAs(cell)"
                         ng:attr:width="{{ ngModel.cellSize }}"
                         ng:attr:height="{{ ngModel.cellSize }}"
                         ng:attr:x="{{ cell.x * ngModel.cellSize }}"
                         ng:attr:y="{{ cell.y * ngModel.cellSize }}"
-                        xlink:href="https://openclipart.org/download/191072/Blue-Robot.svg" />
-                    <g ng-if="!ngModel.robotAt(cell.x, cell.y).isAlive">
-                        <line 
-                              ng:attr:x1="{{ cell.x * ngModel.cellSize }}"
-                              ng:attr:y1="{{ cell.y * ngModel.cellSize }}"
-                              ng:attr:x2="{{ (cell.x * ngModel.cellSize) + ngModel.cellSize }}"
-                              ng:attr:y2="{{ (cell.y * ngModel.cellSize) + ngModel.cellSize }}" />
-                        <line 
-                              ng:attr:x1="{{ cell.x * ngModel.cellSize }}"
-                              ng:attr:y1="{{ (cell.y * ngModel.cellSize) + ngModel.cellSize }}"
-                              ng:attr:x2="{{ (cell.x * ngModel.cellSize) + ngModel.cellSize }}"
-                              ng:attr:y2="{{ (cell.y * ngModel.cellSize) }}" />
+                        xlink:href="https://openclipart.org/download/219585/1432836387.svg" />
+                    <g ng-if="ngModel.robotAt(cell.x, cell.y)">
+                        <image 
+                            ng:attr:width="{{ ngModel.cellSize }}"
+                            ng:attr:height="{{ ngModel.cellSize }}"
+                            ng:attr:x="{{ cell.x * ngModel.cellSize }}"
+                            ng:attr:y="{{ cell.y * ngModel.cellSize }}"
+                            xlink:href="https://openclipart.org/download/191072/Blue-Robot.svg" />
+                        <g ng-if="!ngModel.robotAt(cell.x, cell.y).isAlive">
+                            <line 
+                                  ng:attr:x1="{{ cell.x * ngModel.cellSize }}"
+                                  ng:attr:y1="{{ cell.y * ngModel.cellSize }}"
+                                  ng:attr:x2="{{ (cell.x * ngModel.cellSize) + ngModel.cellSize }}"
+                                  ng:attr:y2="{{ (cell.y * ngModel.cellSize) + ngModel.cellSize }}" />
+                            <line 
+                                  ng:attr:x1="{{ cell.x * ngModel.cellSize }}"
+                                  ng:attr:y1="{{ (cell.y * ngModel.cellSize) + ngModel.cellSize }}"
+                                  ng:attr:x2="{{ (cell.x * ngModel.cellSize) + ngModel.cellSize }}"
+                                  ng:attr:y2="{{ (cell.y * ngModel.cellSize) }}" />
+                        </g>
                     </g>
                 </g>
+                <text class="gameOver" ng-if="ngModel.gameOver" 
+                      ng:attr:x="{{ ngModel.gameWidth / 2 }}"
+                      ng:attr:y="{{ ngModel.gameHeight / 2 }}">Game Over</text>
             </g>
         </svg>
     </div>
