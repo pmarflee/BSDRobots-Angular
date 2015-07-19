@@ -10,7 +10,7 @@
                       ng:attr:y="{{ cell.y * ngModel.cellSize }}"
                       ng-class="{hover: isValidCellSelection()}" />
                 <image 
-                    ng-if="ngModel.player.x == cell.x && ngModel.player.y == cell.y"
+                    ng-if="ngModel.player.hasSamePositionAs(cell)"
                     ng:attr:width="{{ ngModel.cellSize }}"
                     ng:attr:height="{{ ngModel.cellSize }}"
                     ng:attr:x="{{ cell.x * ngModel.cellSize }}"
