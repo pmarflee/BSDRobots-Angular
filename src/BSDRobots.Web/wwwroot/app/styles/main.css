@@ -29,3 +29,7 @@ rect.cellOdd {
     fill: #72A0C1;
     stroke: none;
 }
+
+rect.hover:hover {
+  fill: #ff6a00;
+}

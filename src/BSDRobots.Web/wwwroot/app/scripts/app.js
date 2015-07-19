@@ -6,7 +6,9 @@
         .config(function (GridServiceProvider) {
             GridServiceProvider.setSize(55, 31);
         })
-        .controller('RobotsController', function ($scope, GameManager) {
+        .controller('RobotsController', function ($scope, $log, GameManager) {
+            var ctrl = this;
+
             this.game = GameManager;
 
             this.newGame = function () {
@@ -15,11 +17,15 @@
             };
 
             this.startGame = function () {
-                var self = this;
             };
 
-            $scope.cellClicked = function () {
-                alert('clicked!');
+            this.movePlayer = function (cell) {
+                this.game.movePlayer(cell);
+            }
+
+            $scope.movePlayer = function (vector) {
+                $log.debug('Move player. Vector (' + vector.x + ',' + vector.y + ')');
+                this.ctrl.movePlayer(vector);
             };
 
             this.newGame();

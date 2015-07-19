@@ -1,8 +1,23 @@
 ﻿'use strict';
 
+var Entity= function () {
+    this.x = 0;
+    this.y = 0;
+    this.isAlive = true;
+};
+Entity.prototype = {
+    setPosition: function (x, y) {
+        this.x = x;
+        this.y = y;
+    },
+    move: function (vector) {
+        this.setPosition(this.x + vector.x, this.y + vector.y);
+    }
+};
+
 angular
     .module('Grid', [])
-    .factory('CellModel', function () {
+    .factory('Cell', function () {
         var Cell = function (x, y) {
             this.x = x;
             this.y = y;
@@ -10,24 +25,45 @@ angular
 
         return Cell;
     })
-    .factory('PlayerModel', function () {
-        var Player = function () {
-            this.isAlive = true;
-        };
-        Player.prototype = {
-            setPosition: function (x, y) {
-                this.x = x;
-                this.y = y;
-            }
-        };
-
-        return Player;
-    })
-    .factory('RobotModel', function () {
-        var Robot = function (x, y) {
+    .factory('Vector', function () {
+        var Vector = function (x, y) {
             this.x = x;
             this.y = y;
         }
+        Vector.prototype = {
+            invert: function () {
+                return new Vector(-this.x, -this.y);
+            }
+        };
+
+        return Vector;
+    })
+    .factory('Player', function () {
+        return Entity;
+    })
+    .factory('Robot', function (Vector) {
+        var Robot = function () {
+            Entity.apply(this, arguments);
+        };
+        Robot.prototype = new Entity();
+        Robot.prototype.getMovementVector = function (player) {
+            var x, y;
+            if (player.x > this.x) {
+                x = 1;
+            } else if (player.x < this.x) {
+                x = -1;
+            } else {
+                x = 0;
+            }
+            if (player.y > this.y) {
+                y = 1;
+            } else if (player.y < this.y) {
+                y = -1;
+            } else {
+                y = 0;
+            }
+            return new Vector(x, y);
+        };
 
         return Robot;
     })
@@ -41,7 +77,7 @@ angular
 
         var service = this;
 
-        this.$get = function (CellModel, PlayerModel, RobotModel) {
+        this.$get = function (Cell, Player, Robot, Vector) {
             var getRandomNumberBetween = function (min, max) {
                 return Math.floor(Math.random()*(max-min+1)+min);
             },
@@ -53,7 +89,7 @@ angular
             };
 
             this.grid = [];
-            this.player = new PlayerModel();
+            this.player = new Player();
             this.robots = [];
 
             this.prepareNewGame = function () {
@@ -67,7 +103,7 @@ angular
             
                 for (var x = 0; x < service.size.x; x++) {
                     for (var y = 0; y < service.size.y; y++) {
-                        this.grid[(y * service.size.x) + x] = new CellModel(x, y);
+                        this.grid[(y * service.size.x) + x] = new Cell(x, y);
                     }
                 }
             };
@@ -90,7 +126,9 @@ angular
                             continue;
                         }
                     }
-                    this.robots[i++] = new RobotModel(position.x, position.y);
+                    var robot = new Robot();
+                    robot.setPosition(position.x, position.y);
+                    this.robots[i++] = robot;
                 }
                 while (i < 20);
             };
@@ -111,6 +149,25 @@ angular
                 }
                 return false;
             };
+
+            this.isValidCellSelection = function (cell) {
+                var vector = new Vector(cell.x - this.player.x, cell.y - this.player.y),
+                    isValid = (vector.x !== 0 || vector.y !== 0) &&
+                        Math.abs(vector.x) < 2 &&
+                        Math.abs(vector.y) < 2;
+                return {
+                    isValid: isValid,
+                    vector: vector
+                };
+            }
+
+            this.moveRobots = function () {
+                for (var i = 0; i < this.robots.length; i++) {
+                    var robot = this.robots[i],
+                        vector = robot.getMovementVector(this.player);
+                    robot.move(vector);
+                }
+            }
 
             return this;
         };

@@ -2,7 +2,7 @@
 
 angular
     .module('Game', ['Grid'])
-    .service('GameManager', function ($q, $timeout, GridService) {
+    .service('GameManager', function ($q, $timeout, $log, GridService) {
         this.grid = GridService.grid;
         this.player = GridService.player;
         this.robots = GridService.robots;
@@ -22,7 +22,12 @@ angular
             return GridService.hasRobotAt(x, y);
         }
 
-        this.move = function () {
+        this.isValidCellSelection = function (cell) {
+            return GridService.isValidCellSelection(cell);
+        }
 
+        this.movePlayer = function (vector) {
+            this.player.move(vector);
+            GridService.moveRobots();
         };
     });
