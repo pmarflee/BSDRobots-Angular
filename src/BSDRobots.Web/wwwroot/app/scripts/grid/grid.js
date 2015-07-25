@@ -72,7 +72,7 @@ angular
     })
     .provider('GridService', function () {
         this.size = { x: 55, y: 31 };
-        this.cellSize = 25;
+        this.cellSize = 20;
 
         this.setSize = function (x, y) {
             this.size = { x: x, y: y };

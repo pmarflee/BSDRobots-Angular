@@ -1,6 +1,6 @@
 ﻿<div id="game">
     <div class="grid-container">
-        <svg ng:attr:viewBox="-10 10 {{ ngModel.gameWidth }} {{ ngModel.gameHeight }}">
+        <svg width="1170" ng:attr:viewBox="0 0 1170 {{ ngModel.gameHeight }}">
             <g>
                 <g ng-repeat="cell in ngModel.grid track by $index" 
                    ng-click="!ngModel.player.isAlive || cellClicked();">

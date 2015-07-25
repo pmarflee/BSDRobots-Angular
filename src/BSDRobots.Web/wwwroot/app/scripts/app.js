@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('robotsApp', ['Game', 'Grid', 'ngAnimate'])
+        .module('robotsApp', ['Game', 'Grid', 'ngAnimate', 'ui.bootstrap'])
         .config(function (GridServiceProvider) {
             GridServiceProvider.setSize(55, 31);
         })
