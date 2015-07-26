@@ -46,7 +46,7 @@ angular
 
         this.nextLevel = function () {
             this.level++;
-            this.teleports = 3;
+            this.teleports = ((this.level - 1) * 2) + 3;
             GridService.prepareNewGame(((this.level - 1) * 10) + 5);
         };
 
