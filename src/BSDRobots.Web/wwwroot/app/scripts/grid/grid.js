@@ -86,8 +86,8 @@ angular
             },
             getRandomBoardPosition = function () {
                 return {
-                    x: getRandomNumberBetween(0, this.size.x),
-                    y: getRandomNumberBetween(0, this.size.y)
+                    x: getRandomNumberBetween(0, this.size.x - 1),
+                    y: getRandomNumberBetween(0, this.size.y - 1)
                 };
             };
 
