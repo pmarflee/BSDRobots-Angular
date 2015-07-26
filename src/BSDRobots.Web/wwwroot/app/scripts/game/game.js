@@ -41,6 +41,7 @@ angular
         this.reinit = function () {
             this.gameOver = false;
             this.level = 0;
+            this.player.isAlive = true;
             this.nextLevel();
         };
 
