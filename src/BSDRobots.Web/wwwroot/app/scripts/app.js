@@ -4,7 +4,7 @@
     angular
         .module('robotsApp', ['Game', 'Grid', 'ngAnimate', 'ui.bootstrap'])
         .config(function (GridServiceProvider) {
-            GridServiceProvider.setSize(55, 31);
+            GridServiceProvider.setSize(57, 33);
         })
         .controller('RobotsController', function ($scope, $log, GameManager) {
             var ctrl = this;

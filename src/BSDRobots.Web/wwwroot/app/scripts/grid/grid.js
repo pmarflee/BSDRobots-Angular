@@ -71,7 +71,6 @@ angular
         return Robot;
     })
     .provider('GridService', function () {
-        this.size = { x: 55, y: 31 };
         this.cellSize = 20;
 
         this.setSize = function (x, y) {

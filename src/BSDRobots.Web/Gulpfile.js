@@ -20,7 +20,8 @@ var fs = require("fs"),
 eval("var project = " + fs.readFileSync("./project.json"));
 
 var paths = {
-    app_src: project.webroot + '/app/**/*.js',
+    app_src: project.webroot + '/app/**/*.*',
+    app_scripts: project.webroot + '/app/**/*.js',
     app_out: project.webroot + '/build/scripts',
     app_bundle: project.webroot + '/build/scripts/' + app_bundle,
     app_css: project.webroot + '/app/styles/main.css',
@@ -69,7 +70,7 @@ gulp.task('angular-bootstrap-bundle', ['clean-vendor-scripts', 'bower-restore'],
 });
 
 gulp.task('app-scripts', ['clean-app-scripts'], function () {
-    gulp.src(paths.app_src)
+    gulp.src(paths.app_scripts)
     .pipe(sourcemaps.init())
     .pipe(concat(app_bundle))
     .pipe(ngAnnotate({ add: true }))
@@ -105,5 +106,5 @@ gulp.task('bower-restore', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(paths.app_src, ['app-scripts']);
+    gulp.watch(paths.app_src, ['default']);
 });
