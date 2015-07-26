@@ -95,10 +95,10 @@ angular
             this.player = new Player();
             this.robots = [];
 
-            this.prepareNewGame = function () {
+            this.prepareNewGame = function (robots) {
                 this.buildEmptyGameBoard();
                 this.positionPlayer();
-                this.createRobots();
+                this.createRobots(robots);
             };
 
             this.buildEmptyGameBoard = function () {
@@ -116,7 +116,7 @@ angular
                 this.player.moveTo(position.x, position.y);
             };
 
-            this.createRobots = function () {
+            this.createRobots = function (robots) {
                 this.robots = [];
                 var i = 0;
                 do {
@@ -133,7 +133,7 @@ angular
                     robot.moveTo(position.x, position.y);
                     this.robots[i++] = robot;
                 }
-                while (i < 20);
+                while (i < robots);
             };
 
             this.getSize = function () {

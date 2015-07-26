@@ -8,6 +8,9 @@ angular
             updateBoard = function () {
                 GridService.moveRobots();
                 handleCollisions.call(this);
+                if (this.robotsRemaining() === 0) {
+                    this.nextLevel();
+                }
             },
             handleCollisions = function () {
                 for (var i = 0; i < GridService.robots.length; i++) {
@@ -33,15 +36,21 @@ angular
         this.gameWidth = (gameSize.x + 1) * cellSize;
         this.gameHeight = (gameSize.y + 1) * cellSize;
         this.teleports = 0;
+        this.level = 0;
         
         this.reinit = function () {
             this.gameOver = false;
-            this.win = false;
+            this.level = 0;
+            this.nextLevel();
+        };
+
+        this.nextLevel = function () {
+            this.level++;
             this.teleports = 3;
+            GridService.prepareNewGame(((this.level - 1) * 10) + 5);
         };
 
         this.newGame = function () {
-            GridService.prepareNewGame();
             this.reinit();
         };
 
@@ -61,6 +70,8 @@ angular
         this.teleportPlayer = function () {
             if (this.teleports < 1) return;
 
+            this.teleports -= 1;
+
             var x = this.player.x,
                 y = this.player.y;
 
@@ -70,8 +81,6 @@ angular
             while (this.player.x === x && this.player.y === y);
 
             updateBoard.call(this);
-
-            this.teleports -= 1;
         };
 
         this.robotsRemaining = function () {

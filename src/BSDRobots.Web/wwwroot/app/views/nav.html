@@ -14,6 +14,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#" ng-click="ctrl.newGame()">New Game</a></li>
                 </ul>
+                <p class="navbar-text navbar-default">Level: {{ ctrl.game.level }}</p>
                 <p class="navbar-text navbar-default">Robots: {{ ctrl.game.robotsRemaining() }}</p>
                 <p class="navbar-text navbar-default">Teleports: {{ ctrl.game.teleports }}</p>
                 <ul class="nav navbar-nav navbar-right">
