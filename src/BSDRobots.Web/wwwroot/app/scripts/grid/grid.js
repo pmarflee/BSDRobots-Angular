@@ -6,12 +6,12 @@ var Entity= function () {
     this.isAlive = true;
 };
 Entity.prototype = {
-    setPosition: function (x, y) {
+    moveTo: function (x, y) {
         this.x = x;
         this.y = y;
     },
     move: function (vector) {
-        this.setPosition(this.x + vector.x, this.y + vector.y);
+        this.moveTo(this.x + vector.x, this.y + vector.y);
     },
     hasSamePositionAs: function (other) {
         return this.x === other.x && this.y === other.y;
@@ -113,7 +113,7 @@ angular
 
             this.positionPlayer = function () {
                 var position = getRandomBoardPosition.call(this);
-                this.player.setPosition(position.x, position.y);
+                this.player.moveTo(position.x, position.y);
             };
 
             this.createRobots = function () {
@@ -130,7 +130,7 @@ angular
                         }
                     }
                     var robot = new Robot();
-                    robot.setPosition(position.x, position.y);
+                    robot.moveTo(position.x, position.y);
                     this.robots[i++] = robot;
                 }
                 while (i < 20);

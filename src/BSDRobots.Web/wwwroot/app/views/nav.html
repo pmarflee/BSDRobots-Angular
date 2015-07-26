@@ -1,0 +1,25 @@
+﻿<div ng-controller="RobotsController as ctrl">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">BSD Robots</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#" ng-click="ctrl.newGame()">New Game</a></li>
+                </ul>
+                <p class="navbar-text navbar-default">Robots: {{ ctrl.game.robotsRemaining() }}</p>
+                <p class="navbar-text navbar-default">Teleports: {{ ctrl.game.teleports }}</p>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active" ng-class="{disabled: ctrl.game.gameOver || ctrl.game.teleports === 0}"><a href="#" ng-click="ctrl.teleportPlayer()">Teleport</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+</div>

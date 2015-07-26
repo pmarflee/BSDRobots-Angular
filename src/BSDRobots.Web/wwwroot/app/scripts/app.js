@@ -13,18 +13,17 @@
 
             this.newGame = function () {
                 this.game.newGame();
-                this.startGame();
-            };
-
-            this.startGame = function () {
             };
 
             this.movePlayer = function (cell) {
                 this.game.movePlayer(cell);
             }
 
+            this.teleportPlayer = function () {
+                this.game.teleportPlayer();
+            };
+
             $scope.movePlayer = function (vector) {
-                $log.debug('Move player. Vector (' + vector.x + ',' + vector.y + ')');
                 this.ctrl.movePlayer(vector);
             };
 
